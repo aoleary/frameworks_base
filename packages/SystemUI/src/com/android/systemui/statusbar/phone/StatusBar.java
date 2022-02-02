@@ -455,7 +455,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     private final UserInfoControllerImpl mUserInfoControllerImpl;
     private final DismissCallbackRegistry mDismissCallbackRegistry;
     private NotificationsController mNotificationsController;
-    private NotificationStackScrollLayout mNotificationStackScrollLayout;
 
     // viewgroup containing the normal contents of the statusbar
     LinearLayout mStatusBarContent;
@@ -1632,22 +1631,18 @@ public class StatusBar extends SystemUI implements DemoMode,
                 break;
         }
         mDismissAllButton.setLayoutParams(lp);
-        updateDismissAllButtonColors();
         dismissAllButtonStyle();
     }
 
-    public void updateDismissAllButton(int iconcolor, int bgcolor) {
+    public void updateDismissAllButton(int iconcolor) {
         if (mDismissAllButton != null) {
             FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mDismissAllButton.getLayoutParams();
             layoutParams.width = mContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_width);
             layoutParams.height = mContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_height);
             layoutParams.bottomMargin = mContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_margin_bottom);
             mDismissAllButton.setElevation(mContext.getResources().getDimension(R.dimen.dismiss_all_button_elevation));
-            Drawable d = mContext.getResources().getDrawable(R.drawable.dismiss_all_background);
-            updateDismissAllButtonColors();
-            d.setTint(bgcolor);
-            mDismissAllButton.setBackground(d);
             mDismissAllButton.setColorFilter(iconcolor);
+            mDismissAllButton.setBackground(mContext.getResources().getDrawable(R.drawable.dismiss_all_background));
         }
     }
 
@@ -2532,18 +2527,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NOTIF_DISMISSALL_STYLE),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.NOTIF_DISMISALL_COLOR_MODE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.NOTIF_DISMISALL_ICON_COLOR_MODE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.NOTIF_CLEAR_ALL_BG_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.NOTIF_CLEAR_ALL_ICON_COLOR),
-                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2622,11 +2605,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 updateStatusbarColors();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.NOTIF_DISMISSALL_STYLE))) {
                 dismissAllButtonStyle();
-            } else if (uri.equals(Settings.System.getUriFor(Settings.System.NOTIF_DISMISALL_COLOR_MODE)) ||
-                uri.equals(Settings.System.getUriFor(Settings.System.NOTIF_DISMISALL_ICON_COLOR_MODE)) ||
-                uri.equals(Settings.System.getUriFor(Settings.System.NOTIF_CLEAR_ALL_BG_COLOR)) ||
-                uri.equals(Settings.System.getUriFor(Settings.System.NOTIF_CLEAR_ALL_ICON_COLOR))) {
-                updateDismissAllButtonColors();
             }
         }
 
@@ -2655,7 +2633,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateBurnInSets();
             updateStatusbarColors();
             dismissAllButtonStyle();
-            updateDismissAllButtonColors();
         }
     }
 
@@ -2873,12 +2850,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 	mDismissAllButton.setImageDrawable(null);
 	mDismissAllButton.setImageDrawable(d);
-    }
-
-    public void updateDismissAllButtonColors() {
-        if (mNotificationStackScrollLayout != null) {
-            mNotificationStackScrollLayout.checkColor();
-        }
     }
 
     /**

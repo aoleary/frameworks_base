@@ -7216,30 +7216,6 @@ public final class Settings {
         public static final String RECENTS_LOCKED_TASKS = "recents_locked_tasks";
 
         /**
-         *
-         * @hide
-         */
-        public static final String NOTIF_DISMISALL_COLOR_MODE = "notif_bg_color_mode";
-
-        /**
-         *
-         * @hide
-         */
-        public static final String NOTIF_DISMISALL_ICON_COLOR_MODE = "notif_icon_color_mode";
-
-        /**
-         *
-         * @hide
-         */
-        public static final String NOTIF_CLEAR_ALL_ICON_COLOR = "notif_icon_color";
-
-        /**
-         *
-         * @hide
-         */
-        public static final String NOTIF_CLEAR_ALL_BG_COLOR = "notif_bg_color";
-
-        /**
          * Whether to vibrate on call state change
          * @hide
          */
