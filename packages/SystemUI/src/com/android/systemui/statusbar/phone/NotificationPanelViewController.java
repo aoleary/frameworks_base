@@ -2307,7 +2307,8 @@ public class NotificationPanelViewController extends PanelViewController {
         }
         mNotificationStackScroller.setAlpha(alpha);
         mStatusBar.updateDismissAllVisibility(true);
-        mStatusBar.updateDismissAllButton();
+        mStatusBar.dismissAllButtonStyle();
+        mStatusBar.updateDismissAllButtonColors();
         mStatusBar.getPulseController().setQSShowing(mBarState != StatusBarState.KEYGUARD && !isFullyCollapsed());
     }
 
